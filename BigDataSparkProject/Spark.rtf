@@ -1,0 +1,132 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1671\cocoasubrtf600
+{\fonttbl\f0\fswiss\fcharset0 Helvetica;\f1\fnil\fcharset0 HelveticaNeue;\f2\fnil\fcharset0 Menlo-Regular;
+\f3\fmodern\fcharset0 Courier;\f4\fnil\fcharset0 Menlo-Bold;}
+{\colortbl;\red255\green255\blue255;\red0\green0\blue0;\red64\green11\blue217;\red47\green180\blue29;
+\red200\green20\blue201;}
+{\*\expandedcolortbl;;\cssrgb\c0\c0\c0;\cssrgb\c32308\c18668\c88227;\cssrgb\c20238\c73898\c14947;
+\cssrgb\c83396\c23075\c82664;}
+\margl1440\margr1440\vieww10800\viewh8400\viewkind0
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f0\fs24 \cf0 To install spark go to terminal\
+\pard\pardeftab720\sl340\partightenfactor0
+
+\f1\fs28 \cf2 \expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \strokec2 1- docker pull bitnami/spark 
+\fs29\fsmilli14667 docker run -it bitnami/spark\
+2- in docker terminal 
+\fs28 cd/bin/spark-shell\
+3- then copy the file in the docker container \
+\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f0\fs24 \cf0 \kerning1\expnd0\expndtw0 \outl0\strokewidth0 \
+\
+\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+\cf0 1- 
+\f2\fs22 \CocoaLigature0 val csv = sc.textFile("Guyer.csv")\
+\pard\pardeftab720\partightenfactor0
+
+\f3\fs26 \cf0 \expnd0\expndtw0\kerning0
+\CocoaLigature1 // Create a Spark DataFrame\
+    val headerAndRows = csv.map(line => line.split(",").map(_.trim))\
+\
+3- 
+\f2\fs22 \kerning1\expnd0\expndtw0 \CocoaLigature0 val header = headerAndRows.first\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
+
+\f4\b \cf3 header
+\f2\b0 \cf0 : 
+\f4\b \cf4 Array[String]
+\f2\b0 \cf0  = Array("", "cooperation", "condition", "sex")\
+\
+4- al mtcdata = headerAndRows.filter(_(0) != header(0))\
+
+\f4\b \cf3 mtcdata
+\f2\b0 \cf0 : 
+\f4\b \cf4 org.apache.spark.rdd.RDD[Array[String]]
+\f2\b0 \cf0  = MapPartitionsRDD[26] at filter at <console>:27\
+\
+5- val mtinfo = mtcdata.map(p => (p(2),p(1))).toDF
+\f3\fs26 \expnd0\expndtw0\kerning0
+\CocoaLigature1 \
+\pard\pardeftab720\partightenfactor0
+\cf0 \
+6- 
+\f2\fs22 \kerning1\expnd0\expndtw0 \CocoaLigature0 mtinfo.show()\
+/////////Step 4\
+7- val smple = textFile.sample(false,0.25)\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
+\cf0 al df=smple.toDF()\
+df.show()\
+\
+////step 5\
+val resample = smple.sample(true,1)va\
+\
+/////////////////////////////////\
+Step4\
+val header = textFile.first()\
+al data = textFile.filter(row => row !=header)\
+val smple = data.sample(false,0.25)\
+val df = smple.toDF()\
+df.show()\
+///////////\
+Step 5\
+for(a <-1 to 10)\{\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
+\cf5      | \cf0 val smple = data.sample(false,0.25)\
+\cf5      | \cf0 val df = smple.toDF()\
+\cf5      | \cf0 df.show()\}\
+////////////////////////////////Trying\
+\cf5  \cf0 val head = headerAndRows.first\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
+
+\f4\b \cf3 head
+\f2\b0 \cf0 : 
+\f4\b \cf4 Array[String]
+\f2\b0 \cf0  = Array("", "cooperation", "condition", "sex")\
+val cooper = head(2)\
+
+\f4\b \cf3 cooper
+\f2\b0 \cf0 : 
+\f4\b \cf4 String
+\f2\b0 \cf0  = "condition"\
+val one = head(1)\
+
+\f4\b \cf3 one
+\f2\b0 \cf0 : 
+\f4\b \cf4 String
+\f2\b0 \cf0  = "cooperation"\
+\
+\
+val words = textFile.flatMap(w=>w.split(",")).filter(_(0) != header(0))\
+
+\f4\b \cf3 words
+\f2\b0 \cf0 : 
+\f4\b \cf4 org.apache.spark.rdd.RDD[String]
+\f2\b0 \cf0  = MapPartitionsRDD[128] at filter at <console>:30\
+\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
+\cf5  \cf0 words.collect\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
+
+\f4\b \cf3 res66
+\f2\b0 \cf0 : 
+\f4\b \cf4 Array[String]
+\f2\b0 \cf0  = Array(49, 64, 37, 52, 68, 54, 61, 79, 64, 29, 27, 58, 52, 41, 30, 40, 39, 44, 34, 44)\
+\
+//////////////////////// To find the mean STEP 3/////////////////\
+//to get without header \
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
+\cf5  \cf0 val  data1 = textFile.filter(line=>line!=header )\
+def getInt(in:String) : String = \{in.split(",")(1)\}\
+def getString(in:String): String = \{in.split(",")(2)\}\
+val cleanData = data.map(x=>(getString(x),getInt(x))).filter(x=>x._2!=","))\
+val cleanDataInt = cleanData.map(x=>(x._1,x._2.toInt))\
+val cleanDataIntGroup = cleanDataInt.groupByKey()\
+val cleanDataIntGroupMap = cleanDataIntGroup.map(x=>(x._1,(x._2.count(_=>true),x._2.reduce(_+_))))\
+val average = cleanDataIntGroupMap.map(x=>(x._1,x._2._2/x._2._1))\
+average.top(10).foreach(println)\
+\
+}
